@@ -10,6 +10,9 @@ class Users(models.Model):
     last_name = models.CharField(null=False, max_length=30)
     phone_regex = RegexValidator(regex=r'^01[1|0|2|5][0-9]{8}$', message='phone must be an egyptian phone number...')
     phone = models.CharField(null=False, validators=[phone_regex], max_length=14)
-    email = models.EmailField(null=False, max_length=250)
+    email = models.EmailField(null=False, max_length=50)
     password = models.CharField(null=False, max_length=30)
-
+    is_active = models.BooleanField(default=None, blank=True, null=True)
+    birth_date = models.DateField(default=None, blank=True, null=True)
+    facebook_profile = models.CharField(default=None, blank=True, null=True, max_length=50)
+    country = models.CharField(default=None, blank=True, null=True, max_length=50)

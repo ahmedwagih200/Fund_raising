@@ -76,7 +76,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'funds',
         'USER': 'postgres',
-        'PASSWORD': '123',
+        'PASSWORD': 'ahmed',
         'HOST': 'localhost',
         'PORT': ''
     }
@@ -125,3 +125,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / 'media'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ahmedxmen200@gmail.com'
+EMAIL_HOST_PASSWORD = 'elhycgrutaqefnfg'
+EMAIL_PORT = 587

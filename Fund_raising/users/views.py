@@ -1,27 +1,34 @@
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from users.forms import Register_form
 from .models import Users
-
+from .tokens import account_activation_token
 
 
 # Create your views here.
-
-
 def handle_login(request):
-    users= Users.objects.all()
+    users = Users.objects.all()
     email = request.GET['email']
     password = request.GET['psw']
     for user in users:
-        if user.email==email and user.password== password:
-            return render(request, 'home.html')
-
+        if user.email == email and user.password == password:
+            if user.is_active:
+                return render(request, 'home.html')
+            else:
+                args = {'error': "Please active your account"}
+                return render(request, 'login.html', args)
         else:
-            return render(request, 'login.html')
+            args = {'error': "User not found"}
+            return render(request, 'login.html', args)
+
 
 def open_login(request):
     return render(request, 'login.html')
-
-
 
 
 def register(request):
@@ -35,9 +42,36 @@ def register(request):
             form_dict = {}
             form = Register_form(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activation link has been sent to your email id'
+                message = render_to_string('acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'id': urlsafe_base64_encode(force_bytes(user.id)),
+                    'token': account_activation_token.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+                email.send()
                 return render(request, 'login.html', form_dict)
             else:
                 form_dict['form'] = form
                 return render(request, 'register.html', form_dict)
 
+
+def activate(request, uidb64, token):
+    try:
+        user = Users.objects.get(id=uidb64)
+    except(TypeError, ValueError, OverflowError):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
