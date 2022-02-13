@@ -85,10 +85,10 @@
 
   <h2>Login</h2>
 
-	<form action="/action_page.php">
+	<form form method = "GET" action="{% url 'handle_login' %}">
 		<div class="container">
-			<label><b>Username</b></label>
-			<input type="text" placeholder="Enter Username" name="uname" required>
+			<label><b>Email</b></label>
+			<input type="text" placeholder="Enter Your Email" name="email" required>
             <br>
 			<label><b>Password</b></label>
 			<input type="password" placeholder="Enter Password" name="psw" required>
@@ -102,6 +102,7 @@
 		</div>
 
 	</form>
+
 
 </center>
 

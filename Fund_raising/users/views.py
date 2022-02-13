@@ -1,10 +1,27 @@
 from django.shortcuts import render
 from users.forms import Register_form
+from .models import Users
+
 
 
 # Create your views here.
-def login(request):
-    return render(request, 'login.html', )
+
+
+def handle_login(request):
+    users= Users.objects.all()
+    email = request.GET['email']
+    password = request.GET['psw']
+    for user in users:
+        if user.email==email and user.password== password:
+            return render(request, 'home.html')
+
+        else:
+            return render(request, 'login.html')
+
+def open_login(request):
+    return render(request, 'login.html')
+
+
 
 
 def register(request):
