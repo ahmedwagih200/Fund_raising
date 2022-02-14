@@ -1,9 +1,17 @@
+{% extends 'base.html' %}
+
+{%block Title%}
+    profile
+{%endblock%}
+
+{%block content%}
 <center>
-    {%block header%}
-
-       <p>Welcome {{request.session.email}} to your profile page!  </p>
 
 
-    {%endblock%}
+       <p>Welcome {{user.email}} to Home page! </p>
+    <p>Welcome {{user.id}} to Home page! </p>
+    <p>Welcome {{user.phone}} to Home page! </p>
+
+
  </center>
-
+{%endblock%}

@@ -19,7 +19,7 @@ def handle_login(request):
         if user.email == email and user.password == password:
             if user.is_active:
                 dict = {'user': user}
-                return render(request, 'base.html', dict)
+                return render(request, 'home.html', dict)
             else:
                 args = {'error': "Please active your account"}
                 return render(request, 'login.html', args)
@@ -80,3 +80,10 @@ def activate(request, uidb64, token):
 
 def home(request):
     return render(request, 'base.html')
+
+
+def profile(request, id):
+    user = Users.objects.get(id=id)
+    dict = {'user': user}
+
+    return render(request, 'profile.html',dict)
