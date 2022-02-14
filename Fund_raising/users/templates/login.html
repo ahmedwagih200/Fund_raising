@@ -31,6 +31,12 @@
 
 </center>
 <style>
+
+<style><!DOCTYPE html>
+<html>
+<title>
+	Login
+</title>
 	/*set border to the form*/
 
 	form {
@@ -105,4 +111,35 @@
 		}
 	}
 </style>
-{%endblock%}
+
+<body>
+
+<center>
+
+  <h2>Login</h2>
+
+	<form method = "GET" action="{% url 'handle_login' %}">
+		<div class="container">
+			<label><b>Email</b></label>
+			<input type="text" placeholder="Enter Your Email" name="email" required>
+            <br>
+			<label><b>Password</b></label>
+			<input type="password" placeholder="Enter Password" name="psw" required>
+            <br>
+			<button type="submit">Login</button>
+			<br>
+			<button onclick="location.href='{% url 'register' %}'" type="button">
+         Register</button>
+		</div>
+		<p style="color:red"> {{ error }} </p>
+        <br>
+		<div class="container" style="background-color:#f1f1f1">
+		</div>
+
+	</form>
+
+</center>
+
+</body>
+
+</html>
