@@ -11,11 +11,14 @@ def handle_login(request):
     users= Users.objects.all()
     email = request.GET['email']
     password = request.GET['psw']
+
     for user in users:
-        if user.email==email and user.password== password:
-            return render(request, 'home.html')
+        if user.email == email and user.password == password:
+            current_user = {'user': user}
+            return render(request, 'home.html', current_user)
 
         else:
+
             return render(request, 'login.html')
 
 def open_login(request):
@@ -40,4 +43,12 @@ def register(request):
             else:
                 form_dict['form'] = form
                 return render(request, 'register.html', form_dict)
+
+
+def open_profile(request):
+
+    return render(request, 'profile.html')
+
+
+
 

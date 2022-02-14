@@ -24,5 +24,7 @@ urlpatterns = [
     path('handle_login/',handle_login, name='handle_login'),
     path('register/', register, name='register'),
     path('open_login/', open_login, name='open_login'),
+    path('open_profile/', open_profile, name='open_profile'),
+
 
 ]
