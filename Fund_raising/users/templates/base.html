@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+      {%block Title%}
+       base Title
+      {%endblock%}
+    </title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+</head>
+<body>
+<div class="d-flex flex-row-reverse">
+
+ <button style="width: 5%;" class=" p-2" onclick="location.href='{% url 'register' %}'" type="button">
+         Profile</button>
+</div>
+
+<br><br>
+{%block content%}
+     base page
+{{user.first_name}}
+{%endblock%}
+</body>
+</html>
+

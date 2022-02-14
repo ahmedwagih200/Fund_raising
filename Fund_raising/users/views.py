@@ -18,7 +18,8 @@ def handle_login(request):
     for user in users:
         if user.email == email and user.password == password:
             if user.is_active:
-                return render(request, 'home.html')
+                dict = {'user': user}
+                return render(request, 'base.html', dict)
             else:
                 args = {'error': "Please active your account"}
                 return render(request, 'login.html', args)
@@ -75,3 +76,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+def home(request):
+    return render(request, 'base.html')
