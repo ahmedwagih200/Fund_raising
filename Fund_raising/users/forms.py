@@ -8,6 +8,6 @@ class Register_form(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        fields = '__all__'
         model = Users
+        fields = ['first_name', 'last_name', 'phone', 'email', 'password']
 

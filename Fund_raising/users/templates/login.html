@@ -85,7 +85,7 @@
 
   <h2>Login</h2>
 
-	<form form method = "GET" action="{% url 'handle_login' %}">
+	<form method = "GET" action="{% url 'handle_login' %}">
 		<div class="container">
 			<label><b>Email</b></label>
 			<input type="text" placeholder="Enter Your Email" name="email" required>
@@ -98,11 +98,12 @@
 			<button onclick="location.href='{% url 'register' %}'" type="button">
          Register</button>
 		</div>
+		<p style="color:red"> {{ error }} </p>
+        <br>
 		<div class="container" style="background-color:#f1f1f1">
 		</div>
 
 	</form>
-
 
 </center>
 

@@ -24,7 +24,6 @@ urlpatterns = [
     path('handle_login/',handle_login, name='handle_login'),
     path('register/', register, name='register'),
     path('open_login/', open_login, name='open_login'),
-    path('open_profile/', open_profile, name='open_profile'),
-
-
+    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+         activate, name='activate'),
 ]
