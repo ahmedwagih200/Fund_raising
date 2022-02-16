@@ -75,9 +75,9 @@ WSGI_APPLICATION = 'Fund_raising.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'funds',
+        'NAME': 'fund-r',
         'USER': 'postgres',
-        'PASSWORD': '3925164',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': ''
     }
@@ -112,7 +112,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
