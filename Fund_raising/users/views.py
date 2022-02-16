@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from users.forms import Register_form
+from users.forms import Register_form, Update_form
 from .models import Users
 from .tokens import account_activation_token
 
@@ -65,6 +65,20 @@ def register(request):
                 return render(request, 'register.html', form_dict)
 
 
+def edit_personal_info(request, id):
+    user = Users.objects.get(id=id)
+    if request.method == "GET":
+        form_dict = {'user': user}
+        form = Update_form(instance=user)
+        form_dict['form'] = form
+        return render(request, 'edit_personal_info.html', form_dict)
+    else:
+        form = Update_form(request.POST, instance=user)
+        form.save()
+        dict = {'user': user}
+        return render(request, 'profile.html', dict)
+
+
 def activate(request, uidb64, token):
     try:
         user = Users.objects.get(id=uidb64)
@@ -78,12 +92,13 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-def home(request):
-    return render(request, 'base.html')
+def home(request, id):
+    user = Users.objects.get(id=id)
+    dict = {'user': user}
+    return render(request, 'home.html', dict)
 
 
 def profile(request, id):
     user = Users.objects.get(id=id)
     dict = {'user': user}
-
-    return render(request, 'profile.html',dict)
+    return render(request, 'profile.html', dict)
