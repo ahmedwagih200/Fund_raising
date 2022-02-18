@@ -12,11 +12,14 @@
 
 </head>
 <body>
-<div class="d-flex flex-row-reverse">
 
- <button style="width: 5%;" class=" p-2" onclick="location.href='{% url 'profile' user.id %}'" type="button">
+<div class="d-flex flex-row-reverse">
+    <img style="width: 3%; height: 3%; margin-left: 5px;" src="{{ user.image.url }}">
+    <button style="width: 5%; margin-left: 5px;" class=" p-2" onclick="location.href='{% url 'profile' user.id %}'" type="button">
+         Logout</button>
+    <button style="width: 5%;" class=" p-2" onclick="location.href='{% url 'profile' user.id %}'" type="button">
          Profile</button>
-<button style="width: 5%; margin-right: 5px;" class=" p-2" onclick="location.href='{% url 'home' user.id%}'" type="button">
+    <button style="width: 5%; margin-right: 5px;" class=" p-2" onclick="location.href='{% url 'home' user.id%}'" type="button">
          Home</button>
 </div>
 
@@ -27,4 +30,3 @@
 {%endblock%}
 </body>
 </html>
-

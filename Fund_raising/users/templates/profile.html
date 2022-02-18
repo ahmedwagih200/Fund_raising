@@ -6,12 +6,21 @@
 
 {%block content%}
 <center>
-    <p>Welcome {{user.email}} to Home page! </p>
-    <p>Welcome {{user.id}} to Home page! </p>
-    <p>Welcome {{user.phone}} to Home page! </p>
+    <div style="width: 40%; margin-top: -2%;" class="card rounded">
+        <h3>Profile Info</h3>
+        <p>Your ID : {{user.id}} </p>
+        <p>Email : {{user.email}} </p>
+        <p>Phone : {{user.phone}} </p>
+        <p>Password : {{user.password}} </p>
+
+    </div>
+
     <button onclick="location.href='{% url 'edit_info' user.id %}'" type="button">
          Edit My Info</button>
-     <style>
+    <button onclick="location.href='{% url 'delete_acc' user.id %}'" type="button">
+         Delete Account</button>
+
+    <style>
 input[type=text] {
   width: 30%;
   padding: 12px 20px;
@@ -57,7 +66,7 @@ input[type=submit]:hover {
 }
 
 button {
-  width: 10%;
+  width: 9%;
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -74,6 +83,7 @@ div {
   padding: 20px;
 }
 </style>
+
  </center>
 {%endblock%}
 

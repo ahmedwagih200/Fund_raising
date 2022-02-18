@@ -1,8 +1,8 @@
 <head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
 <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans');
     @import url('https://fonts.googleapis.com/css?family=Montserrat');
@@ -116,7 +116,7 @@
 
 <div class="container">
     <br>
-  
+
 	<br>
 	<div class="row" id="ads">
     <!-- Category Card -->
@@ -126,7 +126,7 @@
             <div class="card-image">
                 {% if d.img %}
                 <img class="img-fluid imm" src="{{d.img.url}}" alt="Alternate Text" />
-           
+
                 {% endif %}
             </div>
             <div class="card-image-overlay m-auto">
@@ -141,6 +141,7 @@
                 <a class="ad-btn" href="/{{d.id}}">View</a>
             </div>
         </div>
+
     </div>
     {% endfor %}
 </div>

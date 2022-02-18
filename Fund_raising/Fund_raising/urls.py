@@ -30,6 +30,7 @@ urlpatterns = [
     path('home<id>/', home, name='home'),
     path('profile<id>/', profile, name='profile'),
     path('edit_info<id>/', edit_personal_info, name='edit_info'),
+    path('delete_acc<id>/', delete_acc, name='delete_acc'),
     path('form', UserProjectCreateView.as_view(), name=''),
     path('', project_list, name='project_list'),
     path('', include("django.contrib.auth.urls")),

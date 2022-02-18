@@ -23,9 +23,9 @@ def handle_login(request):
             else:
                 args = {'error': "Please active your account"}
                 return render(request, 'login.html', args)
-        else:
-            args = {'error': "User not found"}
-            return render(request, 'login.html', args)
+
+    args = {'error': "User not found"}
+    return render(request, 'login.html', args)
 
 
 def open_login(request):
@@ -102,3 +102,9 @@ def profile(request, id):
     user = Users.objects.get(id=id)
     dict = {'user': user}
     return render(request, 'profile.html', dict)
+
+
+def delete_acc(request, id):
+    Users.objects.filter(id=id).delete()
+    return render(request, 'login.html')
+
