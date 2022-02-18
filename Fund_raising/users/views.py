@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
@@ -68,12 +70,12 @@ def register(request):
 def edit_personal_info(request, id):
     user = Users.objects.get(id=id)
     if request.method == "GET":
-        form_dict = {'user': user}
+        dict = {'user': user}
         form = Update_form(instance=user)
-        form_dict['form'] = form
-        return render(request, 'edit_personal_info.html', form_dict)
+        dict['form'] = form
+        return render(request, 'edit_personal_info.html', dict)
     else:
-        form = Update_form(request.POST, instance=user)
+        form = Update_form(request.POST, request.FILES, instance=user)
         form.save()
         dict = {'user': user}
         return render(request, 'profile.html', dict)
@@ -107,4 +109,3 @@ def profile(request, id):
 def delete_acc(request, id):
     Users.objects.filter(id=id).delete()
     return render(request, 'login.html')
-

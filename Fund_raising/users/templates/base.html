@@ -14,7 +14,7 @@
 <body>
 
 <div class="d-flex flex-row-reverse">
-    <img style="width: 3%; height: 3%; margin-left: 5px;" src="{{ user.image.url }}">
+    <img style="width: 50px; height: 50px; margin-left: 5px;" src="{{ user.image.url }}">
     <button style="width: 5%; margin-left: 5px;" class=" p-2" onclick="location.href='{% url 'profile' user.id %}'" type="button">
          Logout</button>
     <button style="width: 5%;" class=" p-2" onclick="location.href='{% url 'profile' user.id %}'" type="button">

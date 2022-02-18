@@ -1,21 +1,19 @@
 from dataclasses import field, fields
 from pyclbr import Class
 from django import forms
-from .models import Project_data , Category,Project_pics,project_comments,Donate_project,Report_project
+from .models import Project_data, Category, Project_pics, project_comments, Donate_project, Report_project
+
 
 class Project_Data(forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
         "class": "form-control",
         "multiple": True
     }))
-   
+
     class Meta:
         model = Project_data
-        
-        
-        fields = ('title', 'details','category','target','end_date','current_money','user','img')
-        
 
+        fields = ('title', 'details', 'category', 'target', 'end_date', 'current_money', 'user', 'img')
 
 
 class CommentForm(forms.ModelForm):
@@ -24,24 +22,26 @@ class CommentForm(forms.ModelForm):
         'placeholder': 'comment here ...',
         'rows': '4',
     }))
+
     class Meta:
         model = project_comments
-        fields = ('content','comment_user' )
-
+        fields = ('content', 'comment_user')
 
 
 class Donate(forms.ModelForm):
-     value1 = forms.IntegerField(widget=forms.Textarea(attrs={
+    value1 = forms.IntegerField(widget=forms.Textarea(attrs={
         'class': 'md-textarea form-control',
         'placeholder': 'donate ...',
         'rows': '1',
-        'name':'v'
+        'name': 'v'
     }))
-     class Meta:
-       model=Donate_project
-       fields=('value1','user')
+
+    class Meta:
+        model = Donate_project
+        fields = ('value1', 'user')
+
 
 class report_project(forms.ModelForm):
     class Meta:
-        model=Report_project
-        fields=('user',)       
+        model = Report_project
+        fields = ('user',)
