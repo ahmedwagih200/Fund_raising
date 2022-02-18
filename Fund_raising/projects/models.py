@@ -1,3 +1,4 @@
+from unicodedata import decimal
 from django.db import models
 from users.models import Users
 from django.utils.text import slugify
@@ -10,7 +11,7 @@ class Project_data(models.Model):
   end_date = models.DateField()
   rating = models.IntegerField(null=True)
   reports = models.IntegerField(default=0,null=True)
-  current_money = models.IntegerField(default=0)
+  current_money = models.IntegerField(default=0,null=True)
   remain= models.IntegerField(default=0,null=True)
   created_at = models.DateTimeField(auto_now_add=True)
   featured = models.BooleanField(default=False,null=True)
@@ -68,7 +69,7 @@ class Report_project(models.Model):
 class Rate_project(models.Model):
   user = models.ForeignKey(Users,on_delete=models.CASCADE)
   project = models.ForeignKey(Project_data,related_name='pproject',on_delete=models.CASCADE)
-  value = models.IntegerField()
+  value = models.IntegerField( )
 
 class Donate_project(models.Model):
   user = models.ForeignKey(Users,related_name='donate',on_delete=models.CASCADE)

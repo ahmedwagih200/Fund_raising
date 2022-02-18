@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from pyclbr import Class
 from django import forms
-from .models import Project_data , Category,Project_pics,project_comments,Donate_project,Report_project
+from .models import Project_data , Category,Project_pics,project_comments,Donate_project,Report_project,Rate_project
 
 class Project_Data(forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
@@ -26,7 +26,7 @@ class CommentForm(forms.ModelForm):
     }))
     class Meta:
         model = project_comments
-        fields = ('content','comment_user' )
+        fields = ('comment','comment_user' )
 
 
 
@@ -45,3 +45,11 @@ class report_project(forms.ModelForm):
     class Meta:
         model=Report_project
         fields=('user',)       
+
+
+
+       
+class RateForm(forms.ModelForm):
+    class Meta:
+        model = Rate_project
+        fields = ("user", "value")
