@@ -56,6 +56,25 @@ def project_details(request, id):
     return render(request, 'projects/project_details.html', context)
 
 
+def add_project(request , id):
+    if request.method == 'GET':
+        form_dict = {}
+        form = Project_Data()
+        form_dict['form'] = form
+        return render(request, 'projects/form.html', form_dict)
+    else:
+        if request.method == 'POST':
+            form = Project_Data(request.POST, request.FILES)
+            if form.is_valid():
+                user = Users.objects.get(id=id)
+                project = form.save(commit=False)
+                project.user = user
+                project.save()
+                Projects = Project_data.objects.all()
+                context = {'projects': Projects}
+                return render(request, 'projects/list_project.html', context)
+
+
 class UserProjectCreateView(CreateView):
     template_name = "projects/form.html"
     form_class = Project_Data

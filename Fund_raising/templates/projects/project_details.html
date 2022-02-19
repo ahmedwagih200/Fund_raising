@@ -1,19 +1,14 @@
-
-
-
-
-
 {% load static %}
 
-<!doctype html>
-                        <html>
-                            <head>
-                                <meta charset='utf-8'>
-                                <meta name='viewport' content='width=device-width, initial-scale=1'>
-                                <title>Snippet - GoSNippets</title>
-                                <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
-                                <link href='' rel='stylesheet'>
-                                <style>body {
+
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Snippet - GoSNippets</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='' rel='stylesheet'>
+    <style>body {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #f5f5f5
 }
@@ -69,33 +64,33 @@
     .pro-box-section .pro-box img {
         height: auto;
     }
-}</style>
-                                <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-                                <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-                                <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
-                            </head>
-                            <body oncontextmenu='return false' class='snippet-body'>
-                            <div class="container">
+}
+    </style>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+    <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+</head>
+<body oncontextmenu='return false' class='snippet-body'>
+<div class="container">
     <div class="col-lg-8 border p-3 main-section bg-white">
         <div class="row hedding m-0 pl-3 pt-0 pb-3">
-            
+
         </div>
         <div class="row m-0">
             <div class="col-lg-4 left-side-product-box pb-3">
-                
-              
-                
-                    {% for pi in project_details.project_pics_set.all %}
-                    <img src="{{pi.image.url}}" class="border p-2">
-                    {% endfor %}
-                
-               
+
+<img src="{{project_details.img.url}}" class="border p-2">
+                {% for pi in project_details.project_pics_set.all %}
+
+                {% endfor %}
+
+
             </div>
             <div class="col-lg-8">
                 <div class="right-side-pro-detail border p-3 m-0">
                     <div class="row">
                         <div class="col-lg-12">
-                      
+
                             <p class="m-0 p-0">{{project_details.title}}</p>
                         </div>
                         <div class="col-lg-12">
@@ -117,23 +112,21 @@
                         </div>
                         <div class="col-lg-12 mt-3">
                             <div class="row">
-                              
+
                                 <div class="col-lg-6">
                                     <a href="#" class="btn btn-success w-100">Donate</a>
                                 </div>
                                 <div class="col-lg-6 pb-2">
                                     <a href="#" class="btn btn-danger w-100">Report</a>
                                 </div>
-                               
+
                             </div>
 
 
-
-                            
                             <div>{% if not project_details.comments.all %}
-                                
+
                                 {% else %}
-                                
+
                                 {% for i in project_details.comments.all %}
                                 {{i.comment}}
                                 {{i.comment_user}}
@@ -146,21 +139,22 @@
             </div>
         </div>
         <div>
-        <h1 style="text-align: center">Add Comment to project</h1>
-        <form
-          method="POST"
-          enctype="multipart/form-data"
-          style="text-align: center"
-        >
-          {% csrf_token %} {{ comment_form.as_p }}
-          
-          <button type="submit">Upload</button>
-        </form>
+            <h1 style="text-align: center">Add Comment to project</h1>
+            <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    style="text-align: center"
+            >
+                {% csrf_token %} {{ comment_form.as_p }}
+
+                <button type="submit">Upload</button>
+            </form>
         </div>
-        <form enctype="multipart/form-data" action="{% url 'donate' project_details.id %}" method="post" >
+        <form enctype="multipart/form-data" action="{% url 'donate' project_details.id %}" method="post">
             {% csrf_token %}
             <div class="slidecontainer">
-                <input type="range" min="1" max="{{project_details.target}}" value="0" class="slider" id="calculatorSlider">
+                <input type="range" min="1" max="{{project_details.target}}" value="0" class="slider"
+                       id="calculatorSlider">
                 <input type="text" placeholder="Enter track name" name="u" required></td>
             </div>
 
@@ -168,51 +162,48 @@
             <div class="row"></div>
 
             <h2><span class="badge blue lighten-2 mb-4">Donation</span></h2>
-            <input type="number" class="display-4" value="0" min="0" max="{{project_details.target}}" style="color:#0275f0; border:none; text-align: center;" id="donation" name="donation_value">
+            <input type="number" class="display-4" value="0" min="0" max="{{project_details.target}}"
+                   style="color:#0275f0; border:none; text-align: center;" id="donation" name="donation_value">
             <input type="submit" class="main_btn" value="donate now">
             <!-- Grid row -->
         </form>
 
 
-
-
-        
-        
         <form
-        method="POST"
-        enctype="multipart/form-data"
-       
-        action="{{project_details.id}}/report_p"
-        style="text-align: center"
-      >
-        {% csrf_token %} 
-       
-        <input type="text" placeholder="Enter track name" name="u" required>
-        
-        <button type="submit" id="myBtn">report</button> 
-        
-      </form>
-      
-     
-      <form
-      method="POST"
-      enctype="multipart/form-data"
-     
-      action="{{project_details.id}}/add_rate"
-      style="text-align: center"
-    >
-      {% csrf_token %} 
-     
-      <input type="range" id="rangeInput" 
-      name="rating" min="0" max="10" value="0" step="1"
-      oninput="amount.value=rangeInput.value">                
-      <input type="text" placeholder="user" name="u" required>
-      <button type="submit" id="myBtn">rate</button> 
-      
-    </form>
+                method="POST"
+                enctype="multipart/form-data"
+
+                action="{{project_details.id}}/report_p"
+                style="text-align: center"
+        >
+            {% csrf_token %}
+
+            <input type="text" placeholder="Enter track name" name="u" required>
+
+            <button type="submit" id="myBtn">report</button>
+
+        </form>
+
+
+        <form
+                method="POST"
+                enctype="multipart/form-data"
+
+                action="{{project_details.id}}/add_rate"
+                style="text-align: center"
+        >
+            {% csrf_token %}
+
+            <input type="range" id="rangeInput"
+                   name="rating" min="0" max="10" value="0" step="1"
+                   oninput="amount.value=rangeInput.value">
+            <input type="text" placeholder="user" name="u" required>
+            <button type="submit" id="myBtn">rate</button>
+
+        </form>
         <div class="row">
             <div class="col-lg-12 text-center pt-3">
-                <h4><a  href="/">More Projects</a></h4>
+                <h4><a href="/">More Projects</a></h4>
             </div>
         </div>
         <div class="row mt-3 p-0 text-center pro-box-section">
@@ -243,7 +234,8 @@
     function myFunction() {
       document.getElementById("myBtn").disabled = true;
     }
-    </script>
 
-                            </body>
-                        </html>
+</script>
+
+</body>
+</html>
