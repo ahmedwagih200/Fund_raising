@@ -25,13 +25,16 @@ from users.models import Users
 
 
 def project_list(request):
+
     Projects = Project_data.objects.all()
     context = {'projects': Projects}
+
     return render(request, 'projects/list_project.html', context)
 
 
 def project_details(request, id):
     project_details = get_object_or_404(Project_data, id=id)
+    project_pics = Project_pics.objects.filter(id=id)
 
     comments = project_details.comments
     comment_form = CommentForm()
@@ -42,7 +45,8 @@ def project_details(request, id):
     if average == None:
         average = 0
 
-    context = {'project_details': project_details, 'comment_form': CommentForm, 'comment': comments, "average": average}
+    context = {'project_details': project_details, 'comment_form': CommentForm, 'comment': comments, "average": average
+               , 'project_pics': project_pics}
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -56,7 +60,7 @@ def project_details(request, id):
     return render(request, 'projects/project_details.html', context)
 
 
-def add_project(request , id):
+def add_project(request, id):
     if request.method == 'GET':
         form_dict = {}
         form = Project_Data()
@@ -68,10 +72,16 @@ def add_project(request , id):
             if form.is_valid():
                 user = Users.objects.get(id=id)
                 project = form.save(commit=False)
+                images = request.FILES.getlist("more_images")
+
                 project.user = user
                 project.save()
+                for i in images:
+                    Project_pics.objects.create(image=i, project=project)
+                project_pics = Project_pics.objects.filter(id=id)
                 Projects = Project_data.objects.all()
-                context = {'projects': Projects}
+                context = {'projects': Projects, 'project_pics': project_pics}
+                print( project_pics)
                 return render(request, 'projects/list_project.html', context)
 
 
