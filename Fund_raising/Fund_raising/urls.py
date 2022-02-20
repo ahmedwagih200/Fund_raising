@@ -13,10 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+
 from django.urls import path, include
+
+from .router import router
 from users.views import *
 from projects.views import *
 
@@ -33,12 +35,14 @@ urlpatterns = [
     path('delete_acc<id>/', delete_acc, name='delete_acc'),
     path('add_project<id>/', add_project, name='add_project'),
     path('form', UserProjectCreateView.as_view(), name=''),
-    path('', project_list, name='project_list'),
+    path('project_list/<id>', project_list, name='project_list'),
     path('', include("django.contrib.auth.urls")),
     path('<int:id>', project_details, name='project_details'),
-    path('<int:project_id>/donate/', donate, name='donate'),
+    path('<int:project_id>/<int:user_id>/donate/', donate, name='donate'),
     path('<int:id>', report_project, 'report'),
-]
+    path('list_user_projects/<id>', list_user_projects, name='list_user_projects'),
+    path('myapi/', include(router.urls)),
 
+]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

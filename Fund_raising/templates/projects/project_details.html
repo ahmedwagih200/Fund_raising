@@ -1,241 +1,557 @@
 {% load static %}
 
-
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Snippet - GoSNippets</title>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='' rel='stylesheet'>
-    <style>body {
-    font-family: 'Roboto Condensed', sans-serif;
-    background-color: #f5f5f5
-}
-
-
-
-.hedding {
-    font-size: 20px;
-    color: #ab8181;
-}
-
-.main-section {
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    transform: translate(-50%, 5%);
-}
-
-.left-side-product-box img {
-    width: 100%;
-}
-
-.left-side-product-box .sub-img img {
-    margin-top: 5px;
-    width: 83px;
-    height: 100px;
-}
-
-.right-side-pro-detail span {
-    font-size: 15px;
-}
-
-.right-side-pro-detail p {
-    font-size: 25px;
-    color: #a1a1a1;
-}
-
-.right-side-pro-detail .price-pro {
-    color: #E45641;
-}
-
-.right-side-pro-detail .tag-section {
-    font-size: 18px;
-    color: #5D4C46;
-}
-
-.pro-box-section .pro-box img {
-    width: 100%;
-    height: 200px;
-}
-
-@media (min-width:360px) and (max-width:640px) {
-    .pro-box-section .pro-box img {
-        height: auto;
-    }
-}
-    </style>
-    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
-    <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+    <meta charset="utf-8">
+    <title>Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
-<body oncontextmenu='return false' class='snippet-body'>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
-    <div class="col-lg-8 border p-3 main-section bg-white">
-        <div class="row hedding m-0 pl-3 pt-0 pb-3">
+    <!-- product -->
+    <div class="product-content product-wrap clearfix product-deatil">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 col-xs-12">
+                <div class="product-image">
 
-        </div>
-        <div class="row m-0">
-            <div class="col-lg-4 left-side-product-box pb-3">
-
-<img src="{{project_details.img.url}}" class="border p-2">
-                {% for pi in project_details.project_pics_set.all %}
-                <img src="{{pi.image.url}}" class="border p-2">
-                {% endfor %}
-
-
-            </div>
-            <div class="col-lg-8">
-                <div class="right-side-pro-detail border p-3 m-0">
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                            <p class="m-0 p-0">{{project_details.title}}</p>
-                        </div>
-                        <div class="col-lg-12">
-                            <p class="m-0 p-0 price-pro">End Date</p>
-                            <p class="m-0 p-0 price-pro">{{project_details.end_date}}</p>
-                            <hr class="p-0 m-0">
-                        </div>
-                        <div class="col-lg-12 pt-2">
-                            <h5>Project Detail</h5>
-                            <span>{{project_details.details}}</span>
-                            <hr class="m-0 pt-2 mt-2">
-                        </div>
-                        <div class="col-lg-12">
-                            <p class="tag-section"><strong>Rating : </strong>{{average}}/10</p>
-                        </div>
-                        <div class="col-lg-12">
-                            <h6>achived:</h6>
-                            <div>{{project_details.current_money}}</div>
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                            <div class="row">
-
-                                <div class="col-lg-6">
-                                    <a href="#" class="btn btn-success w-100">Donate</a>
-                                </div>
-                                <div class="col-lg-6 pb-2">
-                                    <a href="#" class="btn btn-danger w-100">Report</a>
-                                </div>
-
-                            </div>
+                    <div id="myCarousel-2" class="carousel slide">
+                        <ol class="carousel-indicators">
+                            {% for pi in project_details.project_pics_set_all %}
+                            <li data-target="#myCarousel-2" data-slide-to="{{forloop.counter}}" class="{% if forloop.counter %} active {% endif %}"></li>
+                            {% endfor %}
+                        </ol>
 
 
-                            <div>{% if not project_details.comments.all %}
-
+                        <div class="carousel-inner">
+                            <!-- Slide 1 -->
+                            {% for pi in project_details.project_pics_set_all  %}
+                            {% if forloop.counter == 1 %}
+                            <div class="carousel-item active">
                                 {% else %}
-
-                                {% for i in project_details.comments.all %}
-                                {{i.comment}}
-                                {{i.comment_user}}
+                                <div class="carousel-item">
+                                    {% endif %}
+                                    <img src="{{pi.image.url}}" class="img-responsive">
+                                </div>
                                 {% endfor %}
-                                {% endif %}
+                                </div>
+
+                                <ol class="carousel-indicators">
+
+                                    {% for pi in project_details.project_pics_set_all %}
+                                        {% if forloop.counter0 == 0 %}
+                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{forloop.counter0}}" class="active"></li>
+                                        {% else %}
+                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{forloop.counter0}}"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ol>
+
+
+
+
+                        </div>
+
+                        <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
+                        <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                <h2 class="name">
+                   <strong>{{project_details.title}}</strong> </h2>
+                    <br>
+                    <br>
+                  <h3> Rating :{{average}}/10</h3>
+
+
+                <hr />
+                <h3 class="price-container">
+                    <h4>achived:</h4>
+                    <div>{{project_details.current_money}}</div>
+
+                </h3>
+                <div class="certified">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">End time<span style="color: red;">{{project_details.end_date}}</span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+                <div class="description description-tabs">
+                    <ul id="myTab" class="nav nav-pills">
+                        <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Project Description </a></li>
+                        <li class=""><a href="#specifications" data-toggle="tab">Add Rate</a></li>
+                        <li class=""><a href="#reviews" data-toggle="tab">Comments</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="more-information">
+                            <br />
+                            <strong>Description Title</strong>
+                            <p>
+                                {{project_details.details}}
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="specifications">
+                            <form
+                            method="POST"
+                            enctype="multipart/form-data"
+
+                            action="{{project_details.id}}/add_rate"
+                            style="text-align: center"
+                    >
+                        {% csrf_token %}
+
+                        <input type="range" id="rangeInput"
+                               name="rating" min="0" max="10" value="0" step="1"
+                               oninput="amount.value=rangeInput.value">
+                        <input type="text" placeholder="user" name="u" required>
+                        <button type="submit" id="myBtn">rate</button>
+
+                    </form>
+                        </div>
+                        <div class="tab-pane fade" id="reviews">
+                            <br />
+
+                                <form method="POST" enctype="multipart/form-data" style="text-align: center" >
+                                    {% csrf_token %} {{ comment_form.as_p }}
+                                    <div class="margin-top-10">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right">
+                                        Submit Comment
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="chat-body no-padding profile-message">
+                                <ul>
+                                    <li class="message">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="online" />
+                                        <span class="message-text">
+                                            <a href="javascript:void(0);" class="username">
+                                                Alisha Molly
+                                                <span class="badge">Purchase Verified</span>
+                                                <span class="pull-right">
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-muted"></i>
+                                                </span>
+                                            </a>
+                                            Can't divide were divide fish forth fish to. Was can't form the, living life grass darkness very image let unto fowl isn't in blessed fill life yielding above all moved
+                                        </span>
+                                        <ul class="list-inline font-xs">
+                                            <li>
+                                                <a href="javascript:void(0);" class="text-info"><i class="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                            </li>
+                                            <li class="pull-right">
+                                                <small class="text-muted pull-right ultra-light"> Posted 1 year ago </small>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="message">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="online" />
+                                        <span class="message-text">
+                                            <a href="javascript:void(0);" class="username">
+                                                Aragon Zarko
+                                                <span class="badge">Purchase Verified</span>
+                                                <span class="pull-right">
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                    <i class="fa fa-star fa-2x text-primary"></i>
+                                                </span>
+                                            </a>
+                                            Excellent product, love it!
+                                        </span>
+                                        <ul class="list-inline font-xs">
+                                            <li>
+                                                <a href="javascript:void(0);" class="text-info"><i class="fa fa-thumbs-up"></i> This was helpful (22)</a>
+                                            </li>
+                                            <li class="pull-right">
+                                                <small class="text-muted pull-right ultra-light"> Posted 1 year ago </small>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <a href="javascript:void(0);" class="btn btn-success btn-lg">Add to cart ($129.54)</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
+                            <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <h1 style="text-align: center">Add Comment to project</h1>
-            <form
-                    method="POST"
-                    enctype="multipart/form-data"
-                    style="text-align: center"
-            >
-                {% csrf_token %} {{ comment_form.as_p }}
-
-                <button type="submit">Upload</button>
-            </form>
-        </div>
-        <form enctype="multipart/form-data" action="{% url 'donate' project_details.id %}" method="post">
-            {% csrf_token %}
-            <div class="slidecontainer">
-                <input type="range" min="1" max="{{project_details.target}}" value="0" class="slider"
-                       id="calculatorSlider">
-                <input type="text" placeholder="Enter track name" name="u" required></td>
-            </div>
-
-            <!-- Grid row -->
-            <div class="row"></div>
-
-            <h2><span class="badge blue lighten-2 mb-4">Donation</span></h2>
-            <input type="number" class="display-4" value="0" min="0" max="{{project_details.target}}"
-                   style="color:#0275f0; border:none; text-align: center;" id="donation" name="donation_value">
-            <input type="submit" class="main_btn" value="donate now">
-            <!-- Grid row -->
-        </form>
-
-
-        <form
-                method="POST"
-                enctype="multipart/form-data"
-
-                action="{{project_details.id}}/report_p"
-                style="text-align: center"
-        >
-            {% csrf_token %}
-
-            <input type="text" placeholder="Enter track name" name="u" required>
-
-            <button type="submit" id="myBtn">report</button>
-
-        </form>
-
-
-        <form
-                method="POST"
-                enctype="multipart/form-data"
-
-                action="{{project_details.id}}/add_rate"
-                style="text-align: center"
-        >
-            {% csrf_token %}
-
-            <input type="range" id="rangeInput"
-                   name="rating" min="0" max="10" value="0" step="1"
-                   oninput="amount.value=rangeInput.value">
-            <input type="text" placeholder="user" name="u" required>
-            <button type="submit" id="myBtn">rate</button>
-
-        </form>
-        <div class="row">
-            <div class="col-lg-12 text-center pt-3">
-                <h4><a href="/">More Projects</a></h4>
-            </div>
-        </div>
-        <div class="row mt-3 p-0 text-center pro-box-section">
-            <div class="col-lg-3 pb-2">
-                <div class="pro-box border p-0 m-0">
-                    <img src="http://nicesnippets.com/demo/pd-b-image1.jpg">
-                </div>
-            </div>
-            <div class="col-lg-3 pb-2">
-                <div class="pro-box border p-0 m-0">
-                    <img src="http://nicesnippets.com/demo/pd-b-images2.jpg">
-                </div>
-            </div>
-            <div class="col-lg-3 pb-2">
-                <div class="pro-box border p-0 m-0">
-                    <img src="http://nicesnippets.com/demo/pd-b-images3.jpg">
-                </div>
-            </div>
-            <div class="col-lg-3 pb-2">
-                <div class="pro-box border p-0 m-0">
-                    <img src="http://nicesnippets.com/demo/pd-b-images4.jpg">
-                </div>
-            </div>
-        </div>
     </div>
+    <!-- end product -->
+
+    <div>{% if not project_details.comments.all %}
+
+        {% else %}
+
+        {% for i in project_details.comments.all %}
+        {{i.comment}}
+        {{i.comment_user}}
+        {% endfor %}
+        {% endif %}
+    </div>
+
 </div>
-<script>
-    function myFunction() {
-      document.getElementById("myBtn").disabled = true;
+
+
+
+
+<style type="text/css">
+body{
+    margin-top:20px;
+    background:#eee;
+}
+
+
+.product-content {
+    border: 1px solid #dfe5e9;
+    margin-bottom: 20px;
+    margin-top: 12px;
+    background: #fff
+}
+
+.product-content .carousel-control.left {
+    margin-left: 0
+}
+
+.product-content .product-image {
+    background-color: #fff;
+    display: block;
+    min-height: 238px;
+    overflow: hidden;
+    position: relative
+}
+
+.product-content .product-deatil {
+    border-bottom: 1px solid #dfe5e9;
+    padding-bottom: 17px;
+    padding-left: 16px;
+    padding-top: 16px;
+    position: relative;
+    background: #fff
+}
+
+.product-content .product-deatil h5 a {
+    color: #2f383d;
+    font-size: 15px;
+    line-height: 19px;
+    text-decoration: none;
+    padding-left: 0;
+    margin-left: 0
+}
+
+.product-content .product-deatil h5 a span {
+    color: #9aa7af;
+    display: block;
+    font-size: 13px
+}
+
+.product-content .product-deatil span.tag1 {
+    border-radius: 50%;
+    color: #fff;
+    font-size: 15px;
+    height: 50px;
+    padding: 13px 0;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: 10px;
+    width: 50px
+}
+
+.product-content .product-deatil span.sale {
+    background-color: #21c2f8
+}
+
+.product-content .product-deatil span.discount {
+    background-color: #71e134
+}
+
+.product-content .product-deatil span.hot {
+    background-color: #fa9442
+}
+
+.product-content .description {
+    font-size: 12.5px;
+    line-height: 20px;
+    padding: 10px 14px 16px 19px;
+    background: #fff
+}
+
+.product-content .product-info {
+    padding: 11px 19px 10px 20px
+}
+
+.product-content .product-info a.add-to-cart {
+    color: #2f383d;
+    font-size: 13px;
+    padding-left: 16px
+}
+
+.product-content name.a {
+    padding: 5px 10px;
+    margin-left: 16px
+}
+
+.product-info.smart-form .btn {
+    padding: 6px 12px;
+    margin-left: 12px;
+    margin-top: -10px
+}
+
+.product-entry .product-deatil {
+    border-bottom: 1px solid #dfe5e9;
+    padding-bottom: 17px;
+    padding-left: 16px;
+    padding-top: 16px;
+    position: relative
+}
+
+.product-entry .product-deatil h5 a {
+    color: #2f383d;
+    font-size: 15px;
+    line-height: 19px;
+    text-decoration: none
+}
+
+.product-entry .product-deatil h5 a span {
+    color: #9aa7af;
+    display: block;
+    font-size: 13px
+}
+
+.load-more-btn {
+    background-color: #21c2f8;
+    border-bottom: 2px solid #037ca5;
+    border-radius: 2px;
+    border-top: 2px solid #0cf;
+    margin-top: 20px;
+    padding: 9px 0;
+    width: 100%
+}
+
+.product-block .product-deatil p.price-container span,
+.product-content .product-deatil p.price-container span,
+.product-entry .product-deatil p.price-container span,
+.shipping table tbody tr td p.price-container span,
+.shopping-items table tbody tr td p.price-container span {
+    color: #21c2f8;
+    font-family: Lato, sans-serif;
+    font-size: 24px;
+    line-height: 20px
+}
+
+.product-info.smart-form .rating label {
+    margin-top: 0
+}
+
+.product-wrap .product-image span.tag2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    padding: 10px 0;
+    color: #fff;
+    font-size: 11px;
+    text-align: center
+}
+
+.product-wrap .product-image span.sale {
+    background-color: #57889c
+}
+
+.product-wrap .product-image span.hot {
+    background-color: #a90329
+}
+
+.shop-btn {
+    position: relative
+}
+
+.shop-btn>span {
+    background: #a90329;
+    display: inline-block;
+    font-size: 10px;
+    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
+    font-weight: 700;
+    border-radius: 50%;
+    padding: 2px 4px 3px!important;
+    text-align: center;
+    line-height: normal;
+    width: 19px;
+    top: -7px;
+    left: -7px
+}
+
+.description-tabs {
+    padding: 30px 0 5px!important
+}
+
+.description-tabs .tab-content {
+    padding: 10px 0
+}
+
+.product-deatil {
+    padding: 30px 30px 50px
+}
+
+.product-deatil hr+.description-tabs {
+    padding: 0 0 5px!important
+}
+
+.product-deatil .carousel-control.left,
+.product-deatil .carousel-control.right {
+    background: none!important
+}
+
+.product-deatil .glyphicon {
+    color: #3276b1
+}
+
+.product-deatil .product-image {
+    border-right: none!important
+}
+
+.product-deatil .name {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.product-deatil .name small {
+    display: block
+}
+
+.product-deatil .name a {
+    margin-left: 0
+}
+
+.product-deatil .price-container {
+    font-size: 24px;
+    margin: 0;
+    font-weight: 300
+}
+
+.product-deatil .price-container small {
+    font-size: 12px
+}
+
+.product-deatil .fa-2x {
+    font-size: 16px!important
+}
+
+.product-deatil .fa-2x>h5 {
+    font-size: 12px;
+    margin: 0
+}
+
+.product-deatil .fa-2x+a,
+.product-deatil .fa-2x+a+a {
+    font-size: 13px
+}
+
+.profile-message ul {
+  list-style: none ;
+}
+
+.product-deatil .certified {
+    margin-top: 10px
+}
+
+.product-deatil .certified ul {
+    padding-left: 0
+}
+
+.product-deatil .certified ul li:not(first-child) {
+    margin-left: -3px
+}
+
+.product-deatil .certified ul li {
+    display: inline-block;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 13px 19px
+}
+
+.product-deatil .certified ul li:first-child {
+    border-right: none
+}
+
+.product-deatil .certified ul li a {
+    text-align: left;
+    font-size: 12px;
+    color: #6d7a83;
+    line-height: 16px;
+    text-decoration: none
+}
+
+.product-deatil .certified ul li a span {
+    display: block;
+    color: #21c2f8;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center
+}
+
+.product-deatil .message-text {
+    width: calc(100% - 70px)
+}
+
+@media only screen and (min-width:1024px) {
+    .product-content div[class*=col-md-4] {
+        padding-right: 0
     }
+    .product-content div[class*=col-md-8] {
+        padding: 0 13px 0 0
+    }
+    .product-wrap div[class*=col-md-5] {
+        padding-right: 0
+    }
+    .product-wrap div[class*=col-md-7] {
+        padding: 0 13px 0 0
+    }
+    .product-content .product-image {
+        border-right: 1px solid #dfe5e9
+    }
+    .product-content .product-info {
+        position: relative
+    }
+}
+
+.message img.online {
+    width:40px;
+    height:40px;
+}
+</style>
+
+<script type="text/javascript">
 
 </script>
-
 </body>
 </html>

@@ -24,11 +24,16 @@ from users.models import Users
 # Create your views here.
 
 
-def project_list(request):
-
+def project_list(request, id):
+    user = Users.objects.get(id=id)
     Projects = Project_data.objects.all()
-    context = {'projects': Projects}
-
+    title1 = request.GET.get('title')
+    tag1 = request.GET.get('tag')
+    if title1 != '' and title1 is not None:
+        Projects = Projects.filter(title__icontains=title1)
+    if tag1 != '' and tag1 is not None:
+        Projects = Projects.filter(tags__slug__icontains=tag1)
+    context = {'projects': Projects, 'user': user}
     return render(request, 'projects/list_project.html', context)
 
 
@@ -46,7 +51,7 @@ def project_details(request, id):
         average = 0
 
     context = {'project_details': project_details, 'comment_form': CommentForm, 'comment': comments, "average": average
-               , 'project_pics': project_pics}
+        , 'project_pics': project_pics}
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -75,13 +80,13 @@ def add_project(request, id):
                 images = request.FILES.getlist("more_images")
 
                 project.user = user
-                project.save()
+                form.save()
                 for i in images:
                     Project_pics.objects.create(image=i, project=project)
                 project_pics = Project_pics.objects.filter(id=id)
                 Projects = Project_data.objects.all()
                 context = {'projects': Projects, 'project_pics': project_pics}
-                print( project_pics)
+
                 return render(request, 'projects/list_project.html', context)
 
 
@@ -98,7 +103,7 @@ class UserProjectCreateView(CreateView):
         return super().form_valid(form)
 
 
-def donate(request, project_id):
+def donate(request, project_id, user_id):
     if request.method == 'POST':
         # d=request.POST.get['dontation_value']
         donating_value = int(request.POST.get('donation_value'))
@@ -108,7 +113,7 @@ def donate(request, project_id):
             project.save()
             Donate_project.objects.create(
                 project=project,
-                user=Users.objects.get(id=request.POST['u']),
+                user=Users.objects.get(id=user_id),
                 value=donating_value
             )
             a = messages.success(request, 'Your Donation done successfully!')

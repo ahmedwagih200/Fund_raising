@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+
+from projects.models import Project_data
 from users.forms import Register_form, Update_form
 from .models import Users
 from .tokens import account_activation_token
@@ -109,3 +111,21 @@ def profile(request, id):
 def delete_acc(request, id):
     Users.objects.filter(id=id).delete()
     return render(request, 'login.html')
+
+
+def list_user_projects(request, id):
+    user = Users.objects.get(id=id)
+    projects = Project_data.objects.filter(user=user)
+    title1 = request.GET.get('title')
+    tag1 = request.GET.get('tag')
+    if title1 != '' and title1 is not None:
+        projects = projects.filter(title__icontains=title1)
+    if tag1 != '' and tag1 is not None:
+        projects = projects.filter(tags__slug__icontains=tag1)
+    context = {'projects': projects, 'user': user}
+    return render(request, 'projects/list_project.html', context)
+
+
+def list_user_donations(request, id):
+
+    pass

@@ -1,7 +1,6 @@
-from unicodedata import decimal
 from django.db import models
+from taggit.managers import TaggableManager
 from users.models import Users
-from django.utils.text import slugify
 
 
 class Project_data(models.Model):
@@ -20,6 +19,7 @@ class Project_data(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='images/', null=True)
     slug = models.SlugField(null=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

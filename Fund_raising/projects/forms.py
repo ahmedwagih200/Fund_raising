@@ -13,7 +13,7 @@ class Project_Data(forms.ModelForm):
     class Meta:
         model = Project_data
 
-        fields = ('title', 'details', 'category', 'target', 'end_date', 'current_money', 'img')
+        fields = ('title', 'details', 'category', 'target', 'end_date', 'current_money', 'img', 'tags')
 
 
 class CommentForm(forms.ModelForm):
