@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <h3 > {{cname}} </h3>
+  <div class="row">
+    {% for p in projs %}
+    <div class="col-3 mt-4">
+      <div className=" card h-100">
+        <a href ="{%url  'project_details' %}">  
+        <img className="card-img-top" src="{{p.img.url }}"     height="250" /> </a>
+        <div className="card-body">
+          <div class="card-text text-center">
+          <h5 >{{p.title}} </h5>
+          <h5  > Target: {{p.target}}  </h5>
+          <h5  > Raised: {{p.current_money}}  </h5>
+          <h5  > End date: {{p.end_date}}  </h5>
+        </div>
+    
+        </div>
+    
+    </div>
+  
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+
+{%endblock%}

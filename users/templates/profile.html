@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{%block Title%}
+    profile
+{%endblock%}
+
+{%block content%}
+<center>
+    <div style="width: 40%; margin-top: -2%;" class="card rounded">
+        <h3>Profile Info</h3>
+        <p>Your ID : {{user.id}} </p>
+        <p>Email : {{user.email}} </p>
+        <p>Phone : {{user.phone}} </p>
+        <p>Password : {{user.password}} </p>
+
+    </div>
+
+    <button onclick="location.href='{% url 'edit_info' user.id %}'" type="button">
+         Edit My Info</button>
+    <button onclick="location.href='{% url 'add_project' user.id %}'" type="button">
+         add project</button>
+    <button onclick="myFunction()" type="button">
+         Delete Account</button>
+
+
+    <style>
+input[type=text] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password] {
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=email] {
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 30%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+button {
+  width: 9%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div {
+
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+
+<script>
+function myFunction() {
+  let text = "are u sure you want to delete.";
+  if (confirm(text) == true) {
+  location.href = '{% url 'delete_acc' user.id %}'
+  }
+  document.getElementById("demo").innerHTML = text;
+}
+</script>
+
+ </center>
+{%endblock%}
+
