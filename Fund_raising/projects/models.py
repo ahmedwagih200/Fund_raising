@@ -90,3 +90,5 @@ class Donate_project(models.Model):
 class Report_comment(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     comment = models.ForeignKey(project_comments, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project_data, on_delete=models.CASCADE)
+    is_reported = models.BooleanField()

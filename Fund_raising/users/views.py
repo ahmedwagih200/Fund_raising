@@ -1,5 +1,3 @@
-import os
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
@@ -7,8 +5,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-
-from projects.models import Project_data
+from projects.models import Project_data, Donate_project
 from users.forms import Register_form, Update_form
 from .models import Users
 from .tokens import account_activation_token
@@ -50,6 +47,7 @@ def register(request):
                 user = form.save(commit=False)
                 user.is_active = False
                 user.save()
+                # get project domain
                 current_site = get_current_site(request)
                 mail_subject = 'Activation link has been sent to your email id'
                 message = render_to_string('acc_active_email.html', {
@@ -127,5 +125,15 @@ def list_user_projects(request, id):
 
 
 def list_user_donations(request, id):
+    user = Users.objects.get(id=id)
+    donations = Donate_project.objects.filter(user=user)
 
-    pass
+    donations_list = []
+
+    for d in donations:
+
+        project_info = Project_data.objects.get(id=d.project.id)
+        donations_list.append(project_info)
+
+    context = {'donations': donations_list, 'user': user, 'values': donations}
+    return render(request, 'list_donations.html', context)

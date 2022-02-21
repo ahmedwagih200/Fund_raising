@@ -23,6 +23,8 @@
          Delete Account</button>
     <button onclick="location.href='{% url 'list_user_projects' user.id %}'" type="button">
          My projects</button>
+    <button onclick="location.href='{% url 'list_user_donations' user.id %}'" type="button">
+         My Donations</button>
 
     <style>
 input[type=text] {
@@ -92,7 +94,13 @@ div {
 function myFunction() {
   let text = "are u sure you want to delete.";
   if (confirm(text) == true) {
-  location.href = '{% url 'delete_acc' user.id %}'
+   let password = prompt("Please enter your password");
+   if (password != null) {
+    if (user.password == password)
+    location.href = '{% url 'delete_acc' user.id %}'
+
+  }
+
   }
   document.getElementById("demo").innerHTML = text;
 }

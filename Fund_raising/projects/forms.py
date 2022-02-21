@@ -13,41 +13,14 @@ class Project_Data(forms.ModelForm):
     class Meta:
         model = Project_data
 
-        fields = ('title', 'details', 'category', 'target', 'end_date', 'current_money', 'img', 'tags')
+        fields = ('title', 'details', 'category', 'target', 'end_date', 'img', 'tags')
 
 
 class CommentForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.Textarea(attrs={
-        'class': 'md-textarea form-control',
-        'placeholder': 'comment here ...',
-        'rows': '4',
-    }))
-
     class Meta:
         model = project_comments
-        fields = ('comment', 'comment_user')
+        fields = ('comment',)
 
 
-class Donate(forms.ModelForm):
-    value1 = forms.IntegerField(widget=forms.Textarea(attrs={
-        'class': 'md-textarea form-control',
-        'placeholder': 'donate ...',
-        'rows': '1',
-        'name': 'v'
-    }))
-
-    class Meta:
-        model = Donate_project
-        fields = ('value1', 'user')
 
 
-class report_project(forms.ModelForm):
-    class Meta:
-        model = Report_project
-        fields = ('user',)
-
-
-class RateForm(forms.ModelForm):
-    class Meta:
-        model = Rate_project
-        fields = ("user", "value")

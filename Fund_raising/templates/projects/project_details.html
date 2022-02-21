@@ -1,67 +1,35 @@
-{% load static %}
+{% extends 'base.html' %}
 
+{%block Title%}
+    profile
+{%endblock%}
+{%block content%}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Project</title>
+    <title>product full detail - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
+    <h4>{{msg}}</h4>
     <!-- product -->
     <div class="product-content product-wrap clearfix product-deatil">
         <div class="row">
             <div class="col-md-5 col-sm-12 col-xs-12">
                 <div class="product-image">
-
-                    <div id="myCarousel-2" class="carousel slide">
-                        <ol class="carousel-indicators">
-                            {% for pi in project_details.project_pics_set_all %}
-                            <li data-target="#myCarousel-2" data-slide-to="{{forloop.counter}}" class="{% if forloop.counter %} active {% endif %}"></li>
-                            {% endfor %}
-                        </ol>
-
-
-                        <div class="carousel-inner">
-                            <!-- Slide 1 -->
-                            {% for pi in project_details.project_pics_set_all  %}
-                            {% if forloop.counter == 1 %}
-                            <div class="carousel-item active">
-                                {% else %}
-                                <div class="carousel-item">
-                                    {% endif %}
-                                    <img src="{{pi.image.url}}" class="img-responsive">
-                                </div>
-                                {% endfor %}
-                                </div>
-
-                                <ol class="carousel-indicators">
-
-                                    {% for pi in project_details.project_pics_set_all %}
-                                        {% if forloop.counter0 == 0 %}
-                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{forloop.counter0}}" class="active"></li>
-                                        {% else %}
-                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{forloop.counter0}}"></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ol>
-
-
-
-
-                        </div>
-
-                        <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
-                        <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
-                    </div>
-
+                   {% for pi in project_details.project_pics_set.all %}
+                    <img src="{{pi.image.url}}" class="border p-2" style="width: 200px">
+                    {% endfor %}
                 </div>
             </div>
-
             <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                 <h2 class="name">
                    <strong>{{project_details.title}}</strong> </h2>
@@ -82,16 +50,20 @@
                             <a href="javascript:void(0);">End time<span style="color: red;">{{project_details.end_date}}</span></a>
                         </li>
                         <li>
-                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                            <a href="javascript:void(0);">Remain<span>{{project_details.target}}</span></a>
                         </li>
                     </ul>
                 </div>
                 <hr />
+
+
                 <div class="description description-tabs">
                     <ul id="myTab" class="nav nav-pills">
                         <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Project Description </a></li>
                         <li class=""><a href="#specifications" data-toggle="tab">Add Rate</a></li>
                         <li class=""><a href="#reviews" data-toggle="tab">Comments</a></li>
+                        <li class=""><a href="#donate" data-toggle="tab">Donate</a></li>
+                        <li class=""><a href="#report" data-toggle="tab">Report</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in" id="more-information">
@@ -106,15 +78,15 @@
                             method="POST"
                             enctype="multipart/form-data"
 
-                            action="{{project_details.id}}/add_rate"
+                            action="{% url 'add_rate' project_details.id user.id %}"
                             style="text-align: center"
                     >
                         {% csrf_token %}
 
                         <input type="range" id="rangeInput"
-                               name="rating" min="0" max="10" value="0" step="1"
-                               oninput="amount.value=rangeInput.value">
-                        <input type="text" placeholder="user" name="u" required>
+                               name="rating" min="0" max="10" value="0" step="1" class="slider" id="myRange">
+
+                               <p>Value: <span id="demo"></span></p>
                         <button type="submit" id="myBtn">rate</button>
 
                     </form>
@@ -122,100 +94,107 @@
                         <div class="tab-pane fade" id="reviews">
                             <br />
 
-                                <form method="POST" enctype="multipart/form-data" style="text-align: center" >
-                                    {% csrf_token %} {{ comment_form.as_p }}
-                                    <div class="margin-top-10">
-                                    <button type="submit" class="btn btn-sm btn-primary pull-right">
+                                <form method="POST"
+                                      enctype="multipart/form-data" style="text-align: center" >
+                                    {% csrf_token %} {{ comment_form.as_p}}
+
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right" style="position: relative;right: 160px;bottom:40px ;">
                                         Submit Comment
                                     </button>
-                                </div>
-                            </form>
 
+                            </form>
+                            {% for i in project_details.comments.all %}
                             <div class="chat-body no-padding profile-message">
                                 <ul>
                                     <li class="message">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="online" />
-                                        <span class="message-text">
+
+                                        <div class="message-text">
                                             <a href="javascript:void(0);" class="username">
-                                                Alisha Molly
-                                                <span class="badge">Purchase Verified</span>
-                                                <span class="pull-right">
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-muted"></i>
-                                                </span>
+                                                {{i.comment_user}}
+
                                             </a>
-                                            Can't divide were divide fish forth fish to. Was can't form the, living life grass darkness very image let unto fowl isn't in blessed fill life yielding above all moved
-                                        </span>
+                                        </div>
+                                          <div> {{i.comment}} <span>
+                                            <form
+                                            method="POST"
+                                            enctype="multipart/form-data"
+                                            action="{% url 'report_c' project_details.id user.id i.id %}"
+
+
+                                            style="text-align: center"
+                                    >
+                                        {% csrf_token %}
+
+
+                                        <button type="submit" class="btn btn-sm btn-danger " >
+                                            Report comment
+                                        </button>
+
+                                            </form>
+
+                                    </span>
+
+
                                         <ul class="list-inline font-xs">
-                                            <li>
-                                                <a href="javascript:void(0);" class="text-info"><i class="fa fa-thumbs-up"></i> This was helpful (22)</a>
-                                            </li>
+
                                             <li class="pull-right">
-                                                <small class="text-muted pull-right ultra-light"> Posted 1 year ago </small>
+
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="message">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="online" />
-                                        <span class="message-text">
-                                            <a href="javascript:void(0);" class="username">
-                                                Aragon Zarko
-                                                <span class="badge">Purchase Verified</span>
-                                                <span class="pull-right">
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                    <i class="fa fa-star fa-2x text-primary"></i>
-                                                </span>
-                                            </a>
-                                            Excellent product, love it!
-                                        </span>
-                                        <ul class="list-inline font-xs">
-                                            <li>
-                                                <a href="javascript:void(0);" class="text-info"><i class="fa fa-thumbs-up"></i> This was helpful (22)</a>
-                                            </li>
-                                            <li class="pull-right">
-                                                <small class="text-muted pull-right ultra-light"> Posted 1 year ago </small>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                    </ul>
+
+
                             </div>
+                            {% endfor %}
                         </div>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <a href="javascript:void(0);" class="btn btn-success btn-lg">Add to cart ($129.54)</a>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <div class="btn-group pull-right">
-                            <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist</button>
-                            <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller</button>
+
+
+                        <div class="tab-pane fade" id="donate">
+                            <form enctype="multipart/form-data" action="{% url 'donate' project_details.id user.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="slidecontainer">
+                                 <input type="number" name="donation_value" class="display-4" value="0" min="0" max="{{project_details.target}}"
+                                       style="color:#0275f0; border:none; text-align: center;" id="donation"  >
+                                <input type="submit" class="main_btn" value="donate now">
+                                </div>
+                            </form>
+
                         </div>
+
+
+                        <div class="tab-pane fade" id="report">
+                            <form
+                            method="POST"
+                            enctype="multipart/form-data"
+
+                            action="{% url 'report_p' project_details.id user.id %}"
+                            style="text-align: center"
+                    >
+                        {% csrf_token %}
+
+
+                        <button type="submit" class="btn btn-sm btn-danger " >
+                            Report
+                        </button>
+
+                    </form>
+
+                            </div>
+
                     </div>
+
+
+
+
                 </div>
+
+
+
             </div>
         </div>
     </div>
     <!-- end product -->
-
-    <div>{% if not project_details.comments.all %}
-
-        {% else %}
-
-        {% for i in project_details.comments.all %}
-        {{i.comment}}
-        {{i.comment_user}}
-        {% endfor %}
-        {% endif %}
-    </div>
-
 </div>
 
 
@@ -548,10 +527,51 @@ body{
     width:40px;
     height:40px;
 }
+
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #0430aa;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+
+
 </style>
 
-<script type="text/javascript">
 
-</script>
 </body>
 </html>
+{%endblock%}

@@ -1,38 +1,30 @@
 {% extends 'base.html' %}
 {%block Title%}
-    list projects
+list donations
 {%endblock%}
+
 {%block content%}
-<div class="input-group">
-  <form method="GET">
-    {% csrf_token %}
-    <label for="da"> title </label>
-    <input type="search" name="title" id="da" />
-    <label for="da2"> Tag </label>
-    <input type="search" name="tag" id="da2" />
-    <button class="btn btn-outline-primary" type="submit">search</button>
-  </form>
-</div>
 
 <div class="container-fluid ">
-  <div class="row justify-content-center">
-      {% for d in projects %}
-    <div class="col-auto">
-      {% if d.img %}
-        <div class="card" style="width: 20rem; margin: 10px;">
-            <img style="height: 12rem;" src="{{d.img.url}}" alt="Alternate Text" />
-            <div class="card-body">
-               <h5 class="card-title">{{d.title}}</h5>
-               <p class="card-text">{{d.details}}</p>
-               <button onclick="location.href='{% url 'project_details' d.id user.id %}'" type="button">
-         view</button>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            {% for d in donations %}
+                {% for v in values %}
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Project Title : {{d.title}}</h5>
+                    <p class="card-text">Donation Value : {{v.value}} </p>
+
+                </div>
             </div>
+            {% endfor %}
+            {% endfor %}
+
         </div>
-         {% endif %}
     </div>
-      {% endfor %}
-  </div>
 </div>
+
 <style>
 input[type=text] {
   width: 30%;
@@ -96,4 +88,5 @@ div {
   padding: 10px;
 }
 </style>
+
 {%endblock%}

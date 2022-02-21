@@ -17,3 +17,7 @@ class Users(models.Model):
     facebook_profile = models.CharField(default=None, blank=True, null=True, max_length=50)
     country = models.CharField(default=None, blank=True, null=True, max_length=50)
 
+    def __str__(self):
+        name = self.first_name + self.last_name
+        return name
+
